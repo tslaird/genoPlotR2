@@ -20,3 +20,19 @@ auto_gene_type <- function(n_genes){
   }
   gene_type
 }
+
+pentagonGrob <- function(gene, ...) {
+  head_len<-120
+  glen<-gene$end - gene$start
+  mid <-(gene$end - gene$start)/2
+  if (gene$strand ==1) {
+    x <- c(gene$start, gene$start,gene$end- head_len,gene$end, gene$end- head_len)
+    y <- c(0,1,1,0.5,0)
+  }
+  else {
+    x <- c(gene$start +head_len, gene$start, gene$start +head_len, gene$end ,gene$end)
+    y <- c(0,0.5,1,1,0)
+  }
+  polygonGrob(x, y, gp=gpar(fill=gene$fill, col=gene$col, lty=gene$lty,
+                            lwd=gene$lwd), default.units="native")
+}

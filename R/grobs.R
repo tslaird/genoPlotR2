@@ -163,14 +163,14 @@ comparison_grob <- function(comparison, ...){
 }
 # create annot grob
 label_grob <- function(label, cex=0.8){
-  y <- 0
+  y <- ifelse(!is.null(label$y), label$y,0)
   w <- 0.1
   if (!is.annotation(label)) stop("An annotation object is required")
   if (nrow(label) > 1) stop("A single-line annotation is required")
   grob_list <- gList()
   # range
   if (!is.na(label$x2)){
-    bracket_coord <- bracket_coord(label$x1, label$x2, y=y, w=w)
+    bracket_coord <- bracket_coord(label$x1, label$x2, y=label$y, w=label$w)
     grob_list[[2]] <- linesGrob(x=bracket_coord$x, y=bracket_coord$y,
                                 name=paste("annot", "line",
                                   gsub(" ", "_", label$text), sep="."),
@@ -191,7 +191,7 @@ label_grob <- function(label, cex=0.8){
                                gsub(" ", "_", label$text), sep="."),
                              rot=label$rot,
                              default.units="native",
-                             gp=gpar(col=label$col, cex=cex))
+                             gp=gpar(col=label$col, cex=cex, fontface=2))
   grob_list
 }
 # create annotation grob

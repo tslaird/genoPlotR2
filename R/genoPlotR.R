@@ -727,17 +727,6 @@ plot_gene_map <- function(dna_segs,
       # calculate xscale
       idx <- if (xlims[[i]]$strand[j] == 1) c("x0", "x1") else c("x1", "x0")
       xscale <- as.numeric(xlims[[i]][j,idx])
-      # annotation
-      if (!is.null(annotations[[i]])){
-        pushViewport(viewport(layout.pos.row=1,
-                              layout.pos.col=j*2,
-                              yscale=c(0,1),
-                              xscale=xscale,
-                              just=c("left", "centre"),
-                              name=paste("annotation", i, j, sep=".")))
-        grid.draw(annotation_grobs[[i]][[j]])
-        upViewport() # up annotation vp
-      }
       # dna_seg_scale
       if (dna_seg_scale[i]){
         pushViewport(viewport(layout.pos.row=3,
@@ -778,6 +767,17 @@ plot_gene_map <- function(dna_segs,
                               name=paste("gap", i, j, sep=".")))
         grid.draw(gap_grob(w=def_gap_length, m=widths[2*j-1]/2, i, j))
         upViewport() # up gap vp
+      }
+      # annotation
+      if (!is.null(annotations[[i]])){
+        pushViewport(viewport(layout.pos.row=1,
+                              layout.pos.col=j*2,
+                              yscale=c(0,1),
+                              xscale=xscale,
+                              just=c("left", "centre"),
+                              name=paste("annotation", i, j, sep=".")))
+        grid.draw(annotation_grobs[[i]][[j]])
+        upViewport() # up annotation vp
       }
     }
     upViewport() # up scale_and_dna_seg vp
